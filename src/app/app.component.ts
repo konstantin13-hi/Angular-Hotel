@@ -6,6 +6,9 @@ import {fontAwesomeIcons} from "./shared/font-awesome-icons";
 import {fab} from "@fortawesome/free-brands-svg-icons";
 import {NavbarComponent} from "./layout/navbar/navbar.component";
 import {FooterComponent} from "./layout/footer/footer.component";
+import {ToastModule} from "primeng/toast";
+import {ToastService} from "./layout/toast.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-root',
@@ -15,20 +18,39 @@ import {FooterComponent} from "./layout/footer/footer.component";
     Button,
     FontAwesomeModule,
     NavbarComponent,
-    FooterComponent],
+    FooterComponent,
+    ToastModule,
+
+  ],
+  providers:[MessageService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   faIconLibrary = inject(FaIconLibrary);
-
+  isListingView:boolean = true;
+  toastService = inject(ToastService);
+  messageService = inject(MessageService);
   ngOnInit() {
     this.initFontAwesome();
+    this.listenToastService();
   }
 
   private initFontAwesome() {
     this.faIconLibrary.addIcons(...fontAwesomeIcons);
   }
 
-  protected readonly fab = fab;
+  private listenToastService(){
+    this.toastService.senSub.subscribe({
+      next: newMessage => {
+        if(newMessage && newMessage.summary !==this.toastService.INIT_STATE) {
+              this.messageService.add(newMessage);
+
+        }
+      }
+    })
+  }
+
+
+
 }
