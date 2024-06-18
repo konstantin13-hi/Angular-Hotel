@@ -4,6 +4,7 @@ import {ToolbarModule} from "primeng/toolbar";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {AvatarComponent} from "./avatar/avatar.component";
 import {MenuModule} from "primeng/menu";
+import {CategoryComponent} from "./category/category.component";
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +13,8 @@ import {MenuModule} from "primeng/menu";
     ToolbarModule,
     FaIconComponent,
     AvatarComponent,
-    MenuModule
+    MenuModule,
+    CategoryComponent
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
@@ -26,4 +28,8 @@ export class NavbarComponent implements OnInit {
    ngOnInit() {
 
    }
+
+  openNewSearch() {
+
+  }
 }
